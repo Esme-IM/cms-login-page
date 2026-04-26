@@ -17,7 +17,7 @@ $innermedia_login_update_checker = PucFactory::buildUpdateChecker(
 	__FILE__,
 	'innermedia-cms-login-page'
 );
-$innermedia_login_update_checker->setBranch('main');
+$innermedia_login_update_checker->getVcsApi()->enableReleaseAssets();
 
 
 add_action("login_head", "innermedia_login_head", 20);
