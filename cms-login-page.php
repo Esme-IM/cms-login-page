@@ -5,7 +5,7 @@
 * Plugin URI: https://www.innermedia.co.uk
 * Description: Plugin to add Innermedia branding to the CMS login page
 * Author: Innermedia
-* Version: 2.1
+* Version: 2.2
 */
 
 // Auto-update from GitHub
@@ -182,11 +182,14 @@ function innermedia_login_head() {
 
 add_filter( 'login_display_language_dropdown', '__return_false' );
 
-add_filter( 'login_form_top', 'innermedia_login_placeholders' );
-function innermedia_login_placeholders( $form ) {
-    $form = str_replace( 'name="log"', 'name="log" placeholder="Username or email"', $form );
-    $form = str_replace( 'name="pwd"', 'name="pwd" placeholder="Password"', $form );
-    return $form;
+add_action( 'login_footer', 'innermedia_login_placeholders' );
+function innermedia_login_placeholders() {
+    echo "<script>
+        var log = document.getElementById('user_login');
+        var pwd = document.getElementById('user_pass');
+        if (log) log.setAttribute('placeholder', 'Username');
+        if (pwd) pwd.setAttribute('placeholder', 'Password');
+    </script>";
 }
 
 // change url for login screen
