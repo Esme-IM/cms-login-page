@@ -1,0 +1,33 @@
+=== Innermedia Custom Login Page ===
+Contributors: innermedia
+Tags: login, branding, custom login
+Requires at least: 5.0
+Tested up to: 6.7
+Requires PHP: 7.4
+Stable tag: 2.1
+License: GPLv2 or later
+
+Plugin to add Innermedia branding to the CMS login page.
+
+== Description ==
+
+Replaces the standard WordPress login page with Innermedia branding, including custom logo, colours, fonts, and layout.
+
+== Changelog ==
+
+= 2.1 =
+* Added grey placeholder text for username and password fields
+* Fixed Remember Me label visibility
+
+= 2.0 =
+* Complete redesign with new dark theme and updated branding
+* Added Inter variable font
+* Added GitHub auto-update support
+* Improved accessibility: labels hidden visually but remain for screen readers
+* Improved security: escaped URLs, added rel="noopener noreferrer"
+* Namespaced function names to avoid plugin conflicts
+* Added login header text filter
+* Added button hover transitions
+
+= 1.7 =
+* Previous version with original branding
