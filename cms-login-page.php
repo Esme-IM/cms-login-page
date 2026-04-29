@@ -5,7 +5,7 @@
 * Plugin URI: https://www.innermedia.co.uk
 * Description: Plugin to add Innermedia branding to the CMS login page
 * Author: Innermedia
-* Version: 3.1.2
+* Version: 3.1.3
 */
 
 // Auto-update from GitHub
@@ -26,10 +26,15 @@ function innermedia_login_head() {
 
 	$plugin_url = plugin_dir_url( __FILE__ );
 
-	$user_icon_dim    = "url('" . $plugin_url . "images/icon-user-dim.svg')";
-	$user_icon_active = "url('" . $plugin_url . "images/icon-user-active.svg')";
-	$lock_icon_dim    = "url('" . $plugin_url . "images/icon-lock-dim.svg')";
-	$lock_icon_active = "url('" . $plugin_url . "images/icon-lock-active.svg')";
+	$svg_user_dim    = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E5E4D4" stroke-opacity="0.45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+	$svg_user_active = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF7E16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+	$svg_lock_dim    = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E5E4D4" stroke-opacity="0.45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+	$svg_lock_active = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF7E16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+
+	$user_icon_dim    = "url('data:image/svg+xml;base64," . base64_encode( $svg_user_dim ) . "')";
+	$user_icon_active = "url('data:image/svg+xml;base64," . base64_encode( $svg_user_active ) . "')";
+	$lock_icon_dim    = "url('data:image/svg+xml;base64," . base64_encode( $svg_lock_dim ) . "')";
+	$lock_icon_active = "url('data:image/svg+xml;base64," . base64_encode( $svg_lock_active ) . "')";
 
 	echo "
 
@@ -229,13 +234,25 @@ function innermedia_login_head() {
 	body.login .user-pass-wrap > label,
 	body.login .user-pass-wrap .input-password-toggle-text { display: none !important; }
 
+	body.login #login input[type=text],
+	body.login #login input[type=password],
+	body.login #login input[type=email] {
+		font-size: 15px !important;
+		font-family: 'Inter', sans-serif !important;
+		font-weight: 300 !important;
+		line-height: 1.4 !important;
+	}
 	body.login #login input::placeholder,
-	body.login #login input::-webkit-input-placeholder {
+	body.login #login input::-webkit-input-placeholder,
+	body.login #login input::-moz-placeholder,
+	body.login #login input:-ms-input-placeholder,
+	body.login #login input::-ms-input-placeholder {
 		color: rgba(229,228,212,0.4) !important;
 		opacity: 1 !important;
 		font-family: 'Inter', sans-serif !important;
 		font-weight: 300 !important;
 		font-size: 15px !important;
+		line-height: 1.4 !important;
 	}
 	body.login #login input:focus {
 		outline: 0;
