@@ -5,7 +5,7 @@
 * Plugin URI: https://www.innermedia.co.uk
 * Description: Plugin to add Innermedia branding to the CMS login page
 * Author: Innermedia
-* Version: 3.1
+* Version: 3.1.1
 */
 
 // Auto-update from GitHub
@@ -222,7 +222,7 @@ function innermedia_login_head() {
 		margin: 6px 0 28px;
 		font-size: 13px;
 	}
-	body.login #login .forgetmenot input[type="checkbox"] {
+	body.login #login .forgetmenot input[type=checkbox] {
 		margin: 0;
 		accent-color: var(--im-orange);
 		flex-shrink: 0;
