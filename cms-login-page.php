@@ -5,7 +5,7 @@
 * Plugin URI: https://www.innermedia.co.uk
 * Description: Plugin to add Innermedia branding to the CMS login page
 * Author: Innermedia
-* Version: 3.1.5
+* Version: 3.1.6
 */
 
 // Auto-update from GitHub
@@ -58,7 +58,7 @@ function innermedia_login_head() {
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		padding: 20px 20px 60px;
+		padding: 40px 20px;
 		position: relative;
 		overflow-x: hidden;
 		background-image: radial-gradient(circle at 1px 1px, rgba(229,228,212,0.05) 1px, transparent 0);
@@ -162,6 +162,8 @@ function innermedia_login_head() {
     	clip: rect(0, 0, 0, 0);
 	}
 	body.login #loginform p { margin-bottom: 18px; }
+	body.login .user-pass-wrap { margin-bottom: 18px; }
+	body.login .user-login-wrap { margin-bottom: 18px; }
 
 	body.login #login form .input,
 	body.login #login input[type=password],
@@ -291,6 +293,15 @@ function innermedia_login_head() {
 		line-height: 1.4 !important;
 		transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s;
 	}
+	body.login input:-webkit-autofill::first-line,
+	body.login #login input:-webkit-autofill::first-line,
+	body.login input:autofill::first-line,
+	body.login #login input:autofill::first-line {
+		font-family: 'Inter', sans-serif;
+		font-weight: 300;
+		font-size: 15px;
+		color: var(--im-cream);
+	}
 
 	body.login #login .forgetmenot {
 		display: flex;
@@ -374,15 +385,20 @@ function innermedia_login_head() {
 		display: flex;
 		gap: 12px;
 		justify-content: center;
-		margin-top: 28px;
+		margin-top: 16px;
 		font-size: 11px;
 	}
 	.im-footer-links a {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
 		text-decoration: none;
 		text-transform: uppercase;
 		letter-spacing: 0.16em;
 		font-weight: 600;
-		padding: 9px 18px;
+		height: 32px;
+		padding: 0 18px;
+		line-height: 1;
 		border-radius: 6px;
 		border: 1px solid transparent;
 		transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
@@ -396,7 +412,7 @@ function innermedia_login_head() {
 
 	.im-copyright {
 		text-align: center;
-		margin-top: 40px;
+		margin-top: 24px;
 		font-size: 11px;
 		color: rgba(229,228,212,0.35);
 		letter-spacing: 0.14em;

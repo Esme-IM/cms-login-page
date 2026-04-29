@@ -4,7 +4,7 @@ Tags: login, branding, custom login
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 3.1.5
+Stable tag: 3.1.6
 License: GPLv2 or later
 
 Plugin to add Innermedia branding to the CMS login page.
@@ -14,6 +14,13 @@ Plugin to add Innermedia branding to the CMS login page.
 Replaces the standard WordPress login page with Innermedia branding, including custom logo, colours, fonts, and layout.
 
 == Changelog ==
+
+= 3.1.6 =
+* Body padding back to symmetric 40px 20px (vertical centring)
+* Added bottom margins on .user-pass-wrap and .user-login-wrap for consistent field spacing
+* Autofill ::first-line rule so Safari respects Inter / 15px / cream on autofilled rows
+* Footer links: pill buttons with fixed 32px height and inline-flex centring; tighter top margin (16px)
+* Copyright top margin reduced (40px -> 24px) to bring footer closer to the card
 
 = 3.1.5 =
 * Welcome block has 4px more breathing room before the username field
