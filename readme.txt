@@ -4,7 +4,7 @@ Tags: login, branding, custom login
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 3.0
+Stable tag: 3.1
 License: GPLv2 or later
 
 Plugin to add Innermedia branding to the CMS login page.
@@ -14,6 +14,13 @@ Plugin to add Innermedia branding to the CMS login page.
 Replaces the standard WordPress login page with Innermedia branding, including custom logo, colours, fonts, and layout.
 
 == Changelog ==
+
+= 3.1 =
+* Vertically center the login card on the page (was sitting too high)
+* "Sign In →" submit button label with arrow (replaces default "Log In")
+* Inter font now applied to input placeholders
+* Fixed Remember Me checkbox + label alignment in flex row
+* Added DOMContentLoaded guard plus fallback injection for the "Welcome Back" heading and field placeholders so they render reliably
 
 = 3.0 =
 * Visual redesign: glassmorphism card with animated orange and teal gradient blobs and a subtle dot grid background

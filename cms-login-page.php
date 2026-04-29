@@ -5,7 +5,7 @@
 * Plugin URI: https://www.innermedia.co.uk
 * Description: Plugin to add Innermedia branding to the CMS login page
 * Author: Innermedia
-* Version: 3.0
+* Version: 3.1
 */
 
 // Auto-update from GitHub
@@ -58,7 +58,10 @@ function innermedia_login_head() {
 		background: var(--im-black);
 		color: var(--im-cream);
 		min-height: 100vh;
-		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 		padding: 40px 20px;
 		position: relative;
 		overflow-x: hidden;
@@ -104,7 +107,7 @@ function innermedia_login_head() {
 		width: 100%;
 		max-width: 460px;
 		padding: 0;
-		margin: 60px auto 0;
+		margin: 0 auto;
 		background: transparent;
 		border-radius: 0;
 	}
@@ -138,8 +141,8 @@ function innermedia_login_head() {
 		text-align: left;
 	}
 
-	.im-welcome { text-align: center; margin-bottom: 28px; }
-	.im-welcome h2 {
+	body.login .im-welcome { text-align: center; margin: 0 0 28px; padding: 0; }
+	body.login .im-welcome h2 {
 		font-size: 28px;
 		font-weight: 300;
 		letter-spacing: 0.02em;
@@ -147,7 +150,8 @@ function innermedia_login_head() {
 		margin: 0 0 8px;
 		color: var(--im-cream);
 	}
-	.im-welcome p {
+	body.login #loginform .im-welcome p,
+	body.login .im-welcome p {
 		font-size: 14px;
 		color: rgba(229,228,212,0.6);
 		margin: 0;
@@ -187,7 +191,13 @@ function innermedia_login_head() {
 	body.login #login input#user_pass:focus,
 	body.login #login input#user_pass:not(:placeholder-shown)  { background-image: " . $lock_icon_active . "; }
 
-	body.login #login input::placeholder { color: rgba(229,228,212,0.4); opacity: 1; }
+	body.login #login input::placeholder {
+		color: rgba(229,228,212,0.4);
+		opacity: 1;
+		font-family: 'Inter', sans-serif;
+		font-weight: 300;
+		font-size: 15px;
+	}
 	body.login #login input:focus {
 		outline: 0;
 		border-color: var(--im-orange);
@@ -206,10 +216,17 @@ function innermedia_login_head() {
 	body.login #login .forgetmenot {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 8px;
 		float: none;
 		margin: 6px 0 28px;
 		font-size: 13px;
+	}
+	body.login #login .forgetmenot input[type="checkbox"] {
+		margin: 0;
+		accent-color: var(--im-orange);
+		flex-shrink: 0;
+		vertical-align: middle;
 	}
 	body.login #login .forgetmenot label {
 		position: static;
@@ -222,11 +239,12 @@ function innermedia_login_head() {
 		gap: 8px;
 		color: rgba(229,228,212,0.7);
 		font-size: 13px;
+		line-height: 1;
 	}
-	body.login #login .forgetmenot input { accent-color: var(--im-orange); }
 	body.login #login .forgetmenot a {
 		color: var(--im-teal);
 		text-decoration: none;
+		margin-left: auto;
 	}
 	body.login #login .forgetmenot a:hover { color: var(--im-orange); }
 	body.login #login #nav { display: none; }
@@ -337,22 +355,50 @@ add_action( 'login_footer', 'innermedia_login_placeholders' );
 function innermedia_login_placeholders() {
     echo "<script>
         (function(){
-            var log = document.getElementById('user_login');
-            var pwd = document.getElementById('user_pass');
-            if (log) log.setAttribute('placeholder', 'Username or email');
-            if (pwd) pwd.setAttribute('placeholder', 'Password');
+            function init() {
+                var log = document.getElementById('user_login');
+                var pwd = document.getElementById('user_pass');
+                var btn = document.getElementById('wp-submit');
+                if (log) log.setAttribute('placeholder', 'Username or email');
+                if (pwd) pwd.setAttribute('placeholder', 'Password');
+                if (btn) btn.value = 'Sign In →';
 
-            var forget = document.querySelector('.forgetmenot');
-            var nav    = document.getElementById('nav');
-            if (forget && nav) {
-                var lost = nav.querySelector('a');
-                if (lost) {
-                    lost.textContent = 'Forgot password?';
-                    forget.appendChild(lost);
+                var form = document.getElementById('loginform');
+                if (form && !form.querySelector('.im-welcome')) {
+                    var welcome = document.createElement('div');
+                    welcome.className = 'im-welcome';
+                    welcome.innerHTML = '<h2>Welcome Back</h2><p>Sign in to manage your CMS.</p>';
+                    form.insertBefore(welcome, form.firstChild);
                 }
+
+                var forget = document.querySelector('.forgetmenot');
+                var nav    = document.getElementById('nav');
+                if (forget && nav) {
+                    var lost = nav.querySelector('a');
+                    if (lost) {
+                        lost.textContent = 'Forgot password?';
+                        forget.appendChild(lost);
+                    }
+                }
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
             }
         })();
     </script>";
+}
+
+add_filter( 'gettext', 'innermedia_login_button_label', 20, 3 );
+function innermedia_login_button_label( $translation, $text, $domain ) {
+    if ( ! isset( $GLOBALS['pagenow'] ) || $GLOBALS['pagenow'] !== 'wp-login.php' ) {
+        return $translation;
+    }
+    if ( $text === 'Log In' ) {
+        return 'Sign In →';
+    }
+    return $translation;
 }
 
 // change url for login screen
