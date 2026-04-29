@@ -5,7 +5,7 @@
 * Plugin URI: https://www.innermedia.co.uk
 * Description: Plugin to add Innermedia branding to the CMS login page
 * Author: Innermedia
-* Version: 3.1.4
+* Version: 3.1.5
 */
 
 // Auto-update from GitHub
@@ -138,7 +138,7 @@ function innermedia_login_head() {
 		text-align: left;
 	}
 
-	body.login .im-welcome { text-align: center; margin: 0 0 28px; padding: 0; }
+	body.login .im-welcome { text-align: center; margin: 0 0 32px; padding: 0; }
 	body.login .im-welcome h2 {
 		font-size: 28px;
 		font-weight: 300;
@@ -199,8 +199,7 @@ function innermedia_login_head() {
 		width: 18px;
 		height: 18px;
 	}
-	body.login #login input:focus ~ .im-field-icon,
-	body.login #login input:not(:placeholder-shown) ~ .im-field-icon {
+	body.login #login input:focus ~ .im-field-icon {
 		color: var(--im-orange);
 	}
 
@@ -270,17 +269,27 @@ function innermedia_login_head() {
 	body.login input:-webkit-autofill:hover,
 	body.login input:-webkit-autofill:focus,
 	body.login input:-webkit-autofill:active,
+	body.login input:autofill,
+	body.login input:autofill:hover,
+	body.login input:autofill:focus,
+	body.login input:autofill:active,
 	body.login #login input:-webkit-autofill,
 	body.login #login input:-webkit-autofill:hover,
 	body.login #login input:-webkit-autofill:focus,
-	body.login #login input:-webkit-autofill:active {
+	body.login #login input:-webkit-autofill:active,
+	body.login #login input:autofill,
+	body.login #login input:autofill:hover,
+	body.login #login input:autofill:focus,
+	body.login #login input:autofill:active {
 		-webkit-text-fill-color: var(--im-cream) !important;
 		-webkit-box-shadow: 0 0 0px 1000px rgba(18,29,33,0.95) inset !important;
+		box-shadow: 0 0 0px 1000px rgba(18,29,33,0.95) inset !important;
 		caret-color: var(--im-cream) !important;
 		font-family: 'Inter', sans-serif !important;
 		font-weight: 300 !important;
 		font-size: 15px !important;
-		transition: background-color 5000s ease-in-out 0s;
+		line-height: 1.4 !important;
+		transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s;
 	}
 
 	body.login #login .forgetmenot {
