@@ -5,7 +5,7 @@
 * Plugin URI: https://www.innermedia.co.uk
 * Description: Plugin to add Innermedia branding to the CMS login page
 * Author: Innermedia
-* Version: 3.1.6
+* Version: 3.1.8
 */
 
 // Auto-update from GitHub
@@ -142,9 +142,10 @@ function innermedia_login_head() {
 	body.login .im-welcome h2 {
 		font-size: 28px;
 		font-weight: 300;
-		letter-spacing: 0.02em;
+		line-height: 1;
+		letter-spacing: 1px;
 		text-transform: uppercase;
-		margin: 0 0 8px;
+		margin: 0 0 10px;
 		color: var(--im-cream);
 	}
 	body.login #loginform .im-welcome p,
@@ -284,8 +285,6 @@ function innermedia_login_head() {
 	body.login #login input:autofill:focus,
 	body.login #login input:autofill:active {
 		-webkit-text-fill-color: var(--im-cream) !important;
-		-webkit-box-shadow: 0 0 0px 1000px rgba(18,29,33,0.95) inset !important;
-		box-shadow: 0 0 0px 1000px rgba(18,29,33,0.95) inset !important;
 		caret-color: var(--im-cream) !important;
 		font-family: 'Inter', sans-serif !important;
 		font-weight: 300 !important;
@@ -294,9 +293,17 @@ function innermedia_login_head() {
 		transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s;
 	}
 	body.login input:-webkit-autofill::first-line,
+	body.login input:-webkit-autofill:hover::first-line,
+	body.login input:-webkit-autofill:focus::first-line,
+	body.login input:-webkit-autofill:active::first-line,
 	body.login #login input:-webkit-autofill::first-line,
+	body.login #login input:-webkit-autofill:hover::first-line,
+	body.login #login input:-webkit-autofill:focus::first-line,
+	body.login #login input:-webkit-autofill:active::first-line,
 	body.login input:autofill::first-line,
-	body.login #login input:autofill::first-line {
+	body.login input:autofill:focus::first-line,
+	body.login #login input:autofill::first-line,
+	body.login #login input:autofill:focus::first-line {
 		font-family: 'Inter', sans-serif;
 		font-weight: 300;
 		font-size: 15px;
@@ -356,6 +363,7 @@ function innermedia_login_head() {
 		cursor: pointer;
 		height: auto;
 		line-height: 1;
+		line-height: 1.3;
 		text-shadow: none;
 		box-shadow: 0 8px 24px rgba(255,126,22,0.25);
 		transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
@@ -379,13 +387,14 @@ function innermedia_login_head() {
 	}
 
 	body.login .privacy-policy-link { display: none; }
+	.login .privacy-policy-page-link { margin: 2em 0 2em; }
 	body.login #backtoblog { display: none; }
 
 	.im-footer-links {
 		display: flex;
 		gap: 12px;
 		justify-content: center;
-		margin-top: 16px;
+		margin-top: 8px;
 		font-size: 11px;
 	}
 	.im-footer-links a {
@@ -412,7 +421,7 @@ function innermedia_login_head() {
 
 	.im-copyright {
 		text-align: center;
-		margin-top: 24px;
+		margin-top: 40px;
 		font-size: 11px;
 		color: rgba(229,228,212,0.35);
 		letter-spacing: 0.14em;
@@ -486,6 +495,25 @@ function innermedia_login_placeholders() {
                     welcome.innerHTML = '<h2>Welcome Back</h2><p>Sign in to manage your CMS.</p>';
                     form.insertBefore(welcome, form.firstChild);
                 }
+
+                // Drop Chrome's :-webkit-autofill state on autofilled fields by
+                // re-setting their value, so font rules apply on initial load.
+                setTimeout(function(){
+                    [
+                        document.getElementById('user_login'),
+                        document.getElementById('user_pass')
+                    ].forEach(function(el){
+                        if (!el || !el.value) return;
+                        var hadFocus = (document.activeElement === el);
+                        var v = el.value;
+                        try { el.value = ''; el.value = v; } catch(e){}
+                        if (hadFocus) {
+                            requestAnimationFrame(function(){
+                                try { el.focus(); el.setSelectionRange(v.length, v.length); } catch(e){}
+                            });
+                        }
+                    });
+                }, 350);
 
                 var forget = document.querySelector('.forgetmenot');
                 var nav    = document.getElementById('nav');
