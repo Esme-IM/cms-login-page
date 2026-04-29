@@ -5,7 +5,7 @@
 * Plugin URI: https://www.innermedia.co.uk
 * Description: Plugin to add Innermedia branding to the CMS login page
 * Author: Innermedia
-* Version: 3.1.3
+* Version: 3.1.4
 */
 
 // Auto-update from GitHub
@@ -25,16 +25,6 @@ add_action("login_head", "innermedia_login_head", 20);
 function innermedia_login_head() {
 
 	$plugin_url = plugin_dir_url( __FILE__ );
-
-	$svg_user_dim    = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E5E4D4" stroke-opacity="0.45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
-	$svg_user_active = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF7E16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
-	$svg_lock_dim    = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E5E4D4" stroke-opacity="0.45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
-	$svg_lock_active = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF7E16" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
-
-	$user_icon_dim    = "url('data:image/svg+xml;base64," . base64_encode( $svg_user_dim ) . "')";
-	$user_icon_active = "url('data:image/svg+xml;base64," . base64_encode( $svg_user_active ) . "')";
-	$lock_icon_dim    = "url('data:image/svg+xml;base64," . base64_encode( $svg_lock_dim ) . "')";
-	$lock_icon_active = "url('data:image/svg+xml;base64," . base64_encode( $svg_lock_active ) . "')";
 
 	echo "
 
@@ -186,17 +176,33 @@ function innermedia_login_head() {
 		font-size: 15px;
 		font-weight: 300;
 		color: var(--im-cream);
-		background-repeat: no-repeat;
-		background-position: 18px center;
 		transition: border-color 0.2s ease, background-color 0.2s ease;
 		box-shadow: none;
 	}
-	body.login #login input#user_login   { background-image: " . $user_icon_dim . "; }
-	body.login #login input#user_pass    { background-image: " . $lock_icon_dim . "; padding-right: 48px; }
-	body.login #login input#user_login:focus,
-	body.login #login input#user_login:not(:placeholder-shown) { background-image: " . $user_icon_active . "; }
-	body.login #login input#user_pass:focus,
-	body.login #login input#user_pass:not(:placeholder-shown)  { background-image: " . $lock_icon_active . "; }
+	body.login #login input#user_pass { padding-right: 48px; }
+
+	body.login #login .im-field-wrap { position: relative; }
+	body.login #login .im-field-icon {
+		position: absolute;
+		left: 18px;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 18px;
+		height: 18px;
+		color: rgba(229,228,212,0.45);
+		pointer-events: none;
+		z-index: 2;
+		transition: color 0.2s ease;
+	}
+	body.login #login .im-field-icon svg {
+		display: block;
+		width: 18px;
+		height: 18px;
+	}
+	body.login #login input:focus ~ .im-field-icon,
+	body.login #login input:not(:placeholder-shown) ~ .im-field-icon {
+		color: var(--im-orange);
+	}
 
 	body.login #login .wp-pwd { position: relative; }
 	body.login #login .wp-pwd .button.wp-hide-pw {
@@ -417,8 +423,26 @@ function innermedia_login_welcome() {
 
 add_action( 'login_footer', 'innermedia_login_placeholders' );
 function innermedia_login_placeholders() {
+    $svg_user = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+    $svg_lock = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+
     echo "<script>
         (function(){
+            var svgUser = " . wp_json_encode( $svg_user ) . ";
+            var svgLock = " . wp_json_encode( $svg_lock ) . ";
+
+            function addFieldIcon(id, svg) {
+                var input = document.getElementById(id);
+                if (!input) return;
+                var parent = input.parentElement;
+                if (!parent || parent.querySelector('.im-field-icon')) return;
+                parent.classList.add('im-field-wrap');
+                var icon = document.createElement('span');
+                icon.className = 'im-field-icon';
+                icon.innerHTML = svg;
+                parent.appendChild(icon);
+            }
+
             function init() {
                 var log = document.getElementById('user_login');
                 var pwd = document.getElementById('user_pass');
@@ -426,6 +450,9 @@ function innermedia_login_placeholders() {
                 if (log) log.setAttribute('placeholder', 'Username or email');
                 if (pwd) pwd.setAttribute('placeholder', 'Password');
                 if (btn) btn.value = 'Sign In →';
+
+                addFieldIcon('user_login', svgUser);
+                addFieldIcon('user_pass', svgLock);
 
                 var form = document.getElementById('loginform');
                 if (form && !form.querySelector('.im-welcome')) {

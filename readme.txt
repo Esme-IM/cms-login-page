@@ -4,7 +4,7 @@ Tags: login, branding, custom login
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 3.1.3
+Stable tag: 3.1.4
 License: GPLv2 or later
 
 Plugin to add Innermedia branding to the CMS login page.
@@ -14,6 +14,10 @@ Plugin to add Innermedia branding to the CMS login page.
 Replaces the standard WordPress login page with Innermedia branding, including custom logo, colours, fonts, and layout.
 
 == Changelog ==
+
+= 3.1.4 =
+* Inject user/lock field icons as DOM elements via JS instead of CSS background-image, since Chrome's :-internal-autofill-selected pseudo-class strips background-image with !important whenever a field is autofilled
+* Icons now use currentColor and recolor (cream → orange) via the sibling-input :focus / :not(:placeholder-shown) state
 
 = 3.1.3 =
 * Inline the user/lock icons as base64 SVG data URIs so they render even if the host blocks .svg MIME types or caches the assets folder
