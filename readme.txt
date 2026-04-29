@@ -4,7 +4,7 @@ Tags: login, branding, custom login
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 3.1.1
+Stable tag: 3.1.2
 License: GPLv2 or later
 
 Plugin to add Innermedia branding to the CMS login page.
@@ -14,6 +14,13 @@ Plugin to add Innermedia branding to the CMS login page.
 Replaces the standard WordPress login page with Innermedia branding, including custom logo, colours, fonts, and layout.
 
 == Changelog ==
+
+= 3.1.2 =
+* Switched user/lock field icons from inline SVG data URIs to real SVG files for browser compatibility (icons were not rendering)
+* Added box-sizing: border-box on body to remove the page scroll bar caused by padding overflowing the viewport
+* Shifted login card up the page by ~20px via asymmetric vertical padding
+* Restyled the password show/hide eye button: cream tint matching the field icons, hover turns orange, vertically centred in the input
+* Forced placeholder font/size with !important and added autofill rules so Chrome's saved-credential rendering keeps the cream colour and 15px Inter
 
 = 3.1.1 =
 * Fix fatal parse error caused by double-quoted attribute selector inside the PHP echo (input[type="checkbox"] terminated the string early)

@@ -5,7 +5,7 @@
 * Plugin URI: https://www.innermedia.co.uk
 * Description: Plugin to add Innermedia branding to the CMS login page
 * Author: Innermedia
-* Version: 3.1.1
+* Version: 3.1.2
 */
 
 // Auto-update from GitHub
@@ -26,10 +26,10 @@ function innermedia_login_head() {
 
 	$plugin_url = plugin_dir_url( __FILE__ );
 
-	$user_icon_dim    = "url(\"data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23E5E4D4' stroke-opacity='0.45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3C/svg%3E\")";
-	$user_icon_active = "url(\"data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23FF7E16' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3C/svg%3E\")";
-	$lock_icon_dim    = "url(\"data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23E5E4D4' stroke-opacity='0.45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='11' width='18' height='11' rx='2'/%3E%3Cpath d='M7 11V7a5 5 0 0 1 10 0v4'/%3E%3C/svg%3E\")";
-	$lock_icon_active = "url(\"data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23FF7E16' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='11' width='18' height='11' rx='2'/%3E%3Cpath d='M7 11V7a5 5 0 0 1 10 0v4'/%3E%3C/svg%3E\")";
+	$user_icon_dim    = "url('" . $plugin_url . "images/icon-user-dim.svg')";
+	$user_icon_active = "url('" . $plugin_url . "images/icon-user-active.svg')";
+	$lock_icon_dim    = "url('" . $plugin_url . "images/icon-lock-dim.svg')";
+	$lock_icon_active = "url('" . $plugin_url . "images/icon-lock-active.svg')";
 
 	echo "
 
@@ -58,16 +58,18 @@ function innermedia_login_head() {
 		background: var(--im-black);
 		color: var(--im-cream);
 		min-height: 100vh;
+		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		padding: 40px 20px;
+		padding: 20px 20px 60px;
 		position: relative;
 		overflow-x: hidden;
 		background-image: radial-gradient(circle at 1px 1px, rgba(229,228,212,0.05) 1px, transparent 0);
 		background-size: 32px 32px;
 	}
+	body.login *, body.login *::before, body.login *::after { box-sizing: border-box; }
 	body.login::before {
 		content: '';
 		position: fixed;
@@ -185,18 +187,55 @@ function innermedia_login_head() {
 		box-shadow: none;
 	}
 	body.login #login input#user_login   { background-image: " . $user_icon_dim . "; }
-	body.login #login input#user_pass    { background-image: " . $lock_icon_dim . "; }
+	body.login #login input#user_pass    { background-image: " . $lock_icon_dim . "; padding-right: 48px; }
 	body.login #login input#user_login:focus,
 	body.login #login input#user_login:not(:placeholder-shown) { background-image: " . $user_icon_active . "; }
 	body.login #login input#user_pass:focus,
 	body.login #login input#user_pass:not(:placeholder-shown)  { background-image: " . $lock_icon_active . "; }
 
-	body.login #login input::placeholder {
-		color: rgba(229,228,212,0.4);
-		opacity: 1;
-		font-family: 'Inter', sans-serif;
-		font-weight: 300;
-		font-size: 15px;
+	body.login #login .wp-pwd { position: relative; }
+	body.login #login .wp-pwd .button.wp-hide-pw {
+		position: absolute !important;
+		right: 12px !important;
+		top: 50% !important;
+		transform: translateY(-50%) !important;
+		background: transparent !important;
+		border: 0 !important;
+		box-shadow: none !important;
+		color: rgba(229,228,212,0.45) !important;
+		padding: 0 !important;
+		margin: 0 !important;
+		min-width: 0 !important;
+		min-height: 0 !important;
+		width: auto !important;
+		height: auto !important;
+		line-height: 1 !important;
+	}
+	body.login #login .wp-pwd .button.wp-hide-pw:hover,
+	body.login #login .wp-pwd .button.wp-hide-pw:focus {
+		color: var(--im-orange) !important;
+		background: transparent !important;
+		border: 0 !important;
+		box-shadow: none !important;
+		outline: 0 !important;
+	}
+	body.login #login .wp-pwd .button.wp-hide-pw .dashicons {
+		color: inherit;
+		font-size: 18px;
+		width: 18px;
+		height: 18px;
+		line-height: 18px;
+	}
+	body.login .user-pass-wrap > label,
+	body.login .user-pass-wrap .input-password-toggle-text { display: none !important; }
+
+	body.login #login input::placeholder,
+	body.login #login input::-webkit-input-placeholder {
+		color: rgba(229,228,212,0.4) !important;
+		opacity: 1 !important;
+		font-family: 'Inter', sans-serif !important;
+		font-weight: 300 !important;
+		font-size: 15px !important;
 	}
 	body.login #login input:focus {
 		outline: 0;
@@ -207,10 +246,18 @@ function innermedia_login_head() {
 	body.login input:-webkit-autofill,
 	body.login input:-webkit-autofill:hover,
 	body.login input:-webkit-autofill:focus,
-	body.login input:-webkit-autofill:active {
-		-webkit-text-fill-color: var(--im-cream);
+	body.login input:-webkit-autofill:active,
+	body.login #login input:-webkit-autofill,
+	body.login #login input:-webkit-autofill:hover,
+	body.login #login input:-webkit-autofill:focus,
+	body.login #login input:-webkit-autofill:active {
+		-webkit-text-fill-color: var(--im-cream) !important;
 		-webkit-box-shadow: 0 0 0px 1000px rgba(18,29,33,0.95) inset !important;
-		caret-color: var(--im-cream);
+		caret-color: var(--im-cream) !important;
+		font-family: 'Inter', sans-serif !important;
+		font-weight: 300 !important;
+		font-size: 15px !important;
+		transition: background-color 5000s ease-in-out 0s;
 	}
 
 	body.login #login .forgetmenot {
