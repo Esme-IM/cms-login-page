@@ -4,7 +4,7 @@ Tags: login, branding, custom login
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 3.1.8
+Stable tag: 3.2.0
 License: GPLv2 or later
 
 Plugin to add Innermedia branding to the CMS login page.
@@ -14,6 +14,13 @@ Plugin to add Innermedia branding to the CMS login page.
 Replaces the standard WordPress login page with Innermedia branding, including custom logo, colours, fonts, and layout.
 
 == Changelog ==
+
+= 3.2.0 =
+* Hardened plugin bootstrap: ABSPATH guard, function_exists wrappers, and full plugin headers (License, License URI, Author URI, Text Domain)
+* Update checker now boots on plugins_loaded with a static cache and graceful fallbacks if the library or PucFactory class is missing
+* Inlined CSS/JS now print with stable element IDs (innermedia-login-css / innermedia-login-js) for easier debugging
+* Welcome heading and footer links wrapped in translatable strings via the innermedia-cms-login-page text domain
+* Sign In button label now applied via a scoped gettext filter (only on wp-login.php) instead of relying solely on JS
 
 = 3.1.8 =
 * Welcome heading: tighter line-height: 1, letter-spacing 1px, slightly larger gap below (10px)
