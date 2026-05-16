@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.2.1
+- Removed 25 years from footer text
+
 ## 3.2.0
 - Hardened plugin bootstrap: ABSPATH guard, `function_exists` wrappers, and full plugin headers (License, License URI, Author URI, Text Domain)
 - Update checker now boots on `plugins_loaded` with a static cache and graceful fallbacks if the library or PucFactory class is missing
