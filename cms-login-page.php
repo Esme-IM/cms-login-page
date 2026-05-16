@@ -39,11 +39,6 @@ if ( ! function_exists( 'innermedia_login_bootstrap_updater' ) ) {
 			'innermedia-cms-login-page'
 		);
 
-		$api = $checker->getVcsApi();
-		if ( $api ) {
-			$api->enableReleaseAssets();
-		}
-
 		return $checker;
 	}
 }
