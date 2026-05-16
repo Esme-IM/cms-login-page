@@ -5,7 +5,7 @@
  * Description: Plugin to add Innermedia branding to the CMS login page.
  * Author:      Innermedia
  * Author URI:  https://www.innermedia.co.uk
- * Version:     3.2.0
+ * Version:     3.2.1
  * License:     GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: innermedia-cms-login-page
