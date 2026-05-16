@@ -579,7 +579,7 @@ if ( ! function_exists( 'innermedia_login_footer_message' ) ) {
 				. '</a>';
 		}
 		echo '</div>';
-		echo '<div class="im-copyright">&copy; ' . esc_html( $year ) . ' innermedia <span>&middot;</span> 25 years</div>';
+		echo '<div class="im-copyright">&copy; ' . esc_html( $year ) . ' innermedia</div>';
 	}
 }
 add_action( 'login_footer', 'innermedia_login_footer_message' );
