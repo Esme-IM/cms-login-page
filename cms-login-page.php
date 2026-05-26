@@ -5,7 +5,7 @@
  * Description: Plugin to add Innermedia branding to the CMS login page.
  * Author:      Innermedia
  * Author URI:  https://www.innermedia.co.uk
- * Version:     3.2.1
+ * Version:     3.3.0
  * License:     GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: innermedia-cms-login-page
@@ -134,6 +134,17 @@ if ( ! function_exists( 'innermedia_login_css' ) ) {
 			font-family: 'Inter', sans-serif;
 		}
 
+		body.login a,
+		body.login #login a {
+			color: var(--im-cream) !important;
+		}
+		body.login a:hover,
+		body.login a:focus,
+		body.login #login a:hover,
+		body.login #login a:focus {
+			color: var(--im-orange) !important;
+		}
+
 		body.login #login {
 			position: relative;
 			z-index: 2;
@@ -153,6 +164,7 @@ if ( ! function_exists( 'innermedia_login_css' ) ) {
 			width: 340px;
 			margin: 0 auto;
 			text-indent: -9999px;
+			border-radius: 0 !important;
 		}
 		@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
 			body.login #login h1 a {
@@ -161,7 +173,7 @@ if ( ! function_exists( 'innermedia_login_css' ) ) {
 			}
 		}
 
-		body.login #loginform {
+		body.login #login form {
 			background: rgba(255,255,255,0.04);
 			backdrop-filter: blur(18px);
 			-webkit-backdrop-filter: blur(18px);
@@ -172,6 +184,7 @@ if ( ! function_exists( 'innermedia_login_css' ) ) {
 			position: relative;
 			overflow: hidden;
 			text-align: left;
+			color: var(--im-cream);
 		}
 
 		body.login .im-welcome { text-align: center; margin: 0 0 32px; padding: 0; }
@@ -197,13 +210,16 @@ if ( ! function_exists( 'innermedia_login_css' ) ) {
 			overflow: hidden;
 			clip: rect(0, 0, 0, 0);
 		}
-		body.login #loginform p { margin-bottom: 18px; }
+		body.login #login form p { margin-bottom: 18px; }
 		body.login .user-pass-wrap { margin-bottom: 18px; }
 		body.login .user-login-wrap { margin-bottom: 18px; }
 
 		body.login #login form .input,
 		body.login #login input[type=password],
-		body.login #login input[type=text] {
+		body.login #login input[type=text],
+		body.login #login input[type=email],
+		body.login #login input[type=number],
+		body.login #login input[type=tel] {
 			width: 100%;
 			margin: 0;
 			background-color: rgba(229,228,212,0.06);
@@ -279,7 +295,9 @@ if ( ! function_exists( 'innermedia_login_css' ) ) {
 
 		body.login #login input[type=text],
 		body.login #login input[type=password],
-		body.login #login input[type=email] {
+		body.login #login input[type=email],
+		body.login #login input[type=number],
+		body.login #login input[type=tel] {
 			font-size: 15px !important;
 			font-family: 'Inter', sans-serif !important;
 			font-weight: 300 !important;
@@ -368,11 +386,11 @@ if ( ! function_exists( 'innermedia_login_css' ) ) {
 			line-height: 1;
 		}
 		body.login #login .forgetmenot a {
-			color: var(--im-teal);
+			color: var(--im-teal) !important;
 			text-decoration: none;
 			margin-left: auto;
 		}
-		body.login #login .forgetmenot a:hover { color: var(--im-orange); }
+		body.login #login .forgetmenot a:hover { color: var(--im-orange) !important; }
 		body.login #login #nav { display: none; }
 
 		body.login #login p.submit { float: none; margin: 0; }
@@ -424,7 +442,7 @@ if ( ! function_exists( 'innermedia_login_css' ) ) {
 			margin-top: 16px;
 			font-size: 11px;
 		}
-		.im-footer-links a {
+		body.login .im-footer-links a {
 			display: inline-flex;
 			align-items: center;
 			justify-content: center;
@@ -438,13 +456,13 @@ if ( ! function_exists( 'innermedia_login_css' ) ) {
 			border-radius: 6px;
 			border: 1px solid transparent;
 			transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-			color: var(--im-black);
+			color: var(--im-black) !important;
 			font-family: 'Inter', sans-serif;
 		}
-		.im-footer-links a.support { background: var(--im-cream); border-color: var(--im-cream); }
-		.im-footer-links a.privacy { background: var(--im-teal); border-color: var(--im-teal); }
-		.im-footer-links a.support:hover { background: transparent; color: var(--im-cream); }
-		.im-footer-links a.privacy:hover { background: transparent; color: var(--im-teal); }
+		body.login .im-footer-links a.support { background: var(--im-cream); border-color: var(--im-cream); }
+		body.login .im-footer-links a.privacy { background: var(--im-teal); border-color: var(--im-teal); }
+		body.login .im-footer-links a.support:hover { background: transparent; color: var(--im-cream) !important; }
+		body.login .im-footer-links a.privacy:hover { background: transparent; color: var(--im-teal) !important; }
 
 		.im-copyright {
 			text-align: center;
@@ -464,7 +482,7 @@ if ( ! function_exists( 'innermedia_login_css' ) ) {
 		}
 
 		@media (max-width: 520px) {
-			body.login #loginform { padding: 36px 26px; }
+			body.login #login form { padding: 36px 26px; }
 			body.login #login h1 a { width: 240px; background-size: 240px auto; height: 48px; }
 			.im-welcome h2 { font-size: 26px; }
 		}

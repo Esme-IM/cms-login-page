@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.3.0
+- Force `border-radius: 0` on the login logo so sites whose own stylesheets round image/link corners no longer round the Innermedia logo
+- 2FA / second-step screens: broaden the glass card styling from `#loginform` to `#login form` so iThemes/Solid Security auth-code forms get the same dark card instead of a default white box
+- Add `email`, `number`, and `tel` to the input styling selectors so 2FA code fields pick up the cream-on-dark background, border, and text colour
+- Force cream link colour on the login page with `!important`, with the existing teal "Forgot password?" link and cream/teal footer pill buttons bumped in specificity so they still win (fixes blue links bleeding through from other plugins/themes)
+
 ## 3.2.1
 - Removed 25 years from footer text
 
