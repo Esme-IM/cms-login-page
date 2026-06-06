@@ -1,0 +1,49 @@
+name: Publish release on tag
+
+# Whenever a version tag (e.g. v3.3.2) is pushed, publish a matching GitHub
+# Release. The Plugin Update Checker uses the latest Release to detect updates,
+# so this guarantees a tag never ships without a Release behind it.
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the tagged commit
+        uses: actions/checkout@v4
+
+      - name: Create the Release (if it doesn't already exist)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists — nothing to do."
+            exit 0
+          fi
+
+          # Use the matching CHANGELOG.md section as notes if present,
+          # otherwise let GitHub auto-generate them from commits.
+          version="${TAG#v}"
+          notes_file="$(mktemp)"
+          # Pull the "## <version>" section out of CHANGELOG.md. Uses literal
+          # string matching (no regex) so dots in the version and differing awk
+          # builds can't mangle the heading match. Stops at the next "## ".
+          awk -v head="## $version" '
+            index($0, head) == 1 && (length($0) == length(head) || substr($0, length(head) + 1, 1) == " ") { capture = 1; next }
+            capture && index($0, "## ") == 1 { exit }
+            capture { print }
+          ' CHANGELOG.md > "$notes_file"
+
+          if [ -s "$notes_file" ]; then
+            gh release create "$TAG" --title "$TAG" --notes-file "$notes_file"
+          else
+            gh release create "$TAG" --title "$TAG" --generate-notes
+          fi
