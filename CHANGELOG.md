@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.3.2
+- Fixed an empty dark glass box appearing directly below the login form on the standard login page. The broad `#login > div` card rule added in 3.3.1 (to catch 2FA interstitials) was also styling WordPress core's `<div class="privacy-policy-page-link">` — which holds only the "Privacy Policy" link — as a full glass card. That div is now excluded from the rule
+- Also excluded WordPress's `<div class="language-switcher">` / `<form id="language-switcher">` from the card rules so the language selector (shown when extra locales are installed) doesn't render as a card either
+
 ## 3.3.1
 - Broadened the dark glass card to cover any direct `#login` child (e.g. the Solid Security "Setup Two-Factor" interstitial), so screens that don't use `<form>` no longer render as a white card with unreadable cream text
 - Forced `!important` on the existing `#login form` background/border so the dark card wins if a 2FA plugin sets the form background to white

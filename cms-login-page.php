@@ -5,7 +5,7 @@
  * Description: Plugin to add Innermedia branding to the CMS login page.
  * Author:      Innermedia
  * Author URI:  https://www.innermedia.co.uk
- * Version:     3.3.1
+ * Version:     3.3.2
  * License:     GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: innermedia-cms-login-page
@@ -173,7 +173,7 @@ if ( ! function_exists( 'innermedia_login_css' ) ) {
 			}
 		}
 
-		body.login #login form {
+		body.login #login form:not(#language-switcher) {
 			background: rgba(255,255,255,0.04) !important;
 			backdrop-filter: blur(18px);
 			-webkit-backdrop-filter: blur(18px);
@@ -483,7 +483,7 @@ if ( ! function_exists( 'innermedia_login_css' ) ) {
 
 		/* 3.3.1 — broaden the dark glass card to any login interstitial
 		   (2FA setup, etc.) and restyle stock blue secondary buttons. */
-		body.login #login > div:not(.message):not(#login_error):not(.notice):not(#nav):not(.im-welcome):not(.im-footer-links):not(.im-copyright) {
+		body.login #login > div:not(.message):not(#login_error):not(.notice):not(#nav):not(.language-switcher):not(.privacy-policy-page-link):not(.im-welcome):not(.im-footer-links):not(.im-copyright) {
 			background: rgba(255,255,255,0.04) !important;
 			-webkit-backdrop-filter: blur(18px);
 			backdrop-filter: blur(18px);
