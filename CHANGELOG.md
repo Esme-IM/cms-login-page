@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.3.1
+- Broadened the dark glass card to cover any direct `#login` child (e.g. the Solid Security "Setup Two-Factor" interstitial), so screens that don't use `<form>` no longer render as a white card with unreadable cream text
+- Forced `!important` on the existing `#login form` background/border so the dark card wins if a 2FA plugin sets the form background to white
+- Restyled stock blue secondary buttons (admin-email "Update", 2FA "Resend") as a white underlined text link matching "Remind me later" — no border, no background, hover goes to Innermedia orange
+- Admin-email verification: stacked the Update link onto its own row, tighter against the explanatory copy above, with 18px breathing room before the orange "The email is correct" button
+- 2FA setup: forced the Skip link to white with underline and added 20px clearance below it so it no longer hugs the Continue button (targets known Solid Security / iThemes classes plus a generic skip-link fallback)
+
 ## 3.3.0
 - Force `border-radius: 0` on the login logo so sites whose own stylesheets round image/link corners no longer round the Innermedia logo
 - 2FA / second-step screens: broaden the glass card styling from `#loginform` to `#login form` so iThemes/Solid Security auth-code forms get the same dark card instead of a default white box

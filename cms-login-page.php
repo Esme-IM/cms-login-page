@@ -5,7 +5,7 @@
  * Description: Plugin to add Innermedia branding to the CMS login page.
  * Author:      Innermedia
  * Author URI:  https://www.innermedia.co.uk
- * Version:     3.3.0
+ * Version:     3.3.1
  * License:     GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: innermedia-cms-login-page
@@ -174,10 +174,10 @@ if ( ! function_exists( 'innermedia_login_css' ) ) {
 		}
 
 		body.login #login form {
-			background: rgba(255,255,255,0.04);
+			background: rgba(255,255,255,0.04) !important;
 			backdrop-filter: blur(18px);
 			-webkit-backdrop-filter: blur(18px);
-			border: 1px solid rgba(229,228,212,0.12);
+			border: 1px solid rgba(229,228,212,0.12) !important;
 			border-radius: 22px;
 			padding: 44px 40px 36px;
 			box-shadow: 0 30px 80px rgba(0,0,0,0.45);
@@ -479,6 +479,101 @@ if ( ! function_exists( 'innermedia_login_css' ) ) {
 		.wp-admin #wp-auth-check-wrap #wp-auth-check {
 			max-width: 100% !important;
 			width: 460px !important;
+		}
+
+		/* 3.3.1 — broaden the dark glass card to any login interstitial
+		   (2FA setup, etc.) and restyle stock blue secondary buttons. */
+		body.login #login > div:not(.message):not(#login_error):not(.notice):not(#nav):not(.im-welcome):not(.im-footer-links):not(.im-copyright) {
+			background: rgba(255,255,255,0.04) !important;
+			-webkit-backdrop-filter: blur(18px);
+			backdrop-filter: blur(18px);
+			border: 1px solid rgba(229,228,212,0.12) !important;
+			border-radius: 22px;
+			padding: 44px 40px 36px;
+			box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+			color: var(--im-cream);
+			text-align: left;
+		}
+		body.login #login > div h2,
+		body.login #login > div h3 {
+			color: var(--im-cream);
+			font-weight: 300;
+			margin-top: 0;
+		}
+		body.login #login form p,
+		body.login #login form li,
+		body.login #login > div p,
+		body.login #login > div li {
+			color: var(--im-cream);
+		}
+
+		/* Secondary buttons (admin-email Update, 2FA Resend, etc.) — strip the
+		   stock blue border/background and present as a white underlined link
+		   matching \"Remind me later\". */
+		body.login #login .button:not(.button-primary):not(.wp-hide-pw),
+		body.login #login a.button:not(.button-primary),
+		body.login #login input.button:not(.button-primary):not(.wp-hide-pw),
+		body.login #login button.button:not(.button-primary):not(.wp-hide-pw) {
+			background: transparent !important;
+			border: 0 !important;
+			border-radius: 0 !important;
+			box-shadow: none !important;
+			color: #fff !important;
+			text-decoration: underline !important;
+			text-underline-offset: 3px !important;
+			padding: 0 !important;
+			margin: 0 !important;
+			font-family: 'Inter', sans-serif !important;
+			font-weight: 400 !important;
+			text-transform: none !important;
+			letter-spacing: normal !important;
+			font-size: 14px !important;
+			line-height: 1.5 !important;
+			height: auto !important;
+			width: auto !important;
+			min-width: 0 !important;
+			min-height: 0 !important;
+			text-shadow: none !important;
+			cursor: pointer;
+		}
+		body.login #login .button:not(.button-primary):not(.wp-hide-pw):hover,
+		body.login #login .button:not(.button-primary):not(.wp-hide-pw):focus {
+			color: var(--im-orange) !important;
+			background: transparent !important;
+			text-decoration: underline !important;
+			outline: 0;
+		}
+
+		/* Admin-email verification: stack the Update link tight to the text
+		   above it, with breathing room before the orange Correct button. */
+		body.login #login .admin-email__actions {
+			display: block;
+			margin: 4px 0 0;
+		}
+		body.login #login .admin-email__actions .button:not(.button-primary) {
+			display: inline-block !important;
+			margin: 0 0 18px !important;
+		}
+
+		/* 2FA setup: give the Skip link breathing room above the Continue button.
+		   Selectors cover Solid Security / iThemes and a generic fallback for any
+		   non-primary link that sits directly before the submit row. */
+		body.login #login a.itsec-2fa-mu-skip,
+		body.login #login a.itsec-two-factor-mu-skip,
+		body.login #login .itsec-2fa-mu__skip,
+		body.login #login a[href*=\"skip_2fa\"],
+		body.login #login a[href*=\"two-factor-skip\"] {
+			display: inline-block;
+			color: #fff !important;
+			text-decoration: underline !important;
+			text-underline-offset: 3px;
+			margin: 4px 0 20px !important;
+		}
+		body.login #login p:has(> a.itsec-2fa-mu-skip),
+		body.login #login p:has(> a.itsec-two-factor-mu-skip),
+		body.login #login p:has(> a[href*=\"skip_2fa\"]),
+		body.login #login p:has(> a[href*=\"two-factor-skip\"]) {
+			margin-bottom: 20px;
 		}
 
 		@media (max-width: 520px) {
