@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.3.3
+- Fixed the login card not appearing on the **Wordfence Login Security** two-factor step. Wordfence renders its 2FA prompt as `#wfls-prompt-overlay` — an opaque box absolutely positioned inside `#loginform` that masks the username/password fields — and its default white background showed as a white card on our dark theme. The overlay is now repainted as the dark card (kept opaque so it still masks the fields beneath). Previous 2FA card work targeted iThemes/Solid Security, whose markup sits inside `#login`; Wordfence's does not, so it was never covered
+- Hid the username/password field icons and the show-password eye on the 2FA step (they're `position:absolute` and were bleeding on top of the overlay). Scoped via `:has(#wfls-prompt-overlay)` so the normal login page is unaffected
+- Revealed the Wordfence 2FA field label, which the base rule (which visually hides all `#login` labels) had been suppressing — leaving the code field with no on-screen prompt
+
 ## 3.3.2
 - Fixed an empty dark glass box appearing directly below the login form on the standard login page. The broad `#login > div` card rule added in 3.3.1 (to catch 2FA interstitials) was also styling WordPress core's `<div class="privacy-policy-page-link">` — which holds only the "Privacy Policy" link — as a full glass card. That div is now excluded from the rule
 - Also excluded WordPress's `<div class="language-switcher">` / `<form id="language-switcher">` from the card rules so the language selector (shown when extra locales are installed) doesn't render as a card either

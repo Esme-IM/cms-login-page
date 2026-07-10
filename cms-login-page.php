@@ -5,7 +5,7 @@
  * Description: Plugin to add Innermedia branding to the CMS login page.
  * Author:      Innermedia
  * Author URI:  https://www.innermedia.co.uk
- * Version:     3.3.2
+ * Version:     3.3.3
  * License:     GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: innermedia-cms-login-page
@@ -574,6 +574,41 @@ if ( ! function_exists( 'innermedia_login_css' ) ) {
 		body.login #login p:has(> a[href*=\"skip_2fa\"]),
 		body.login #login p:has(> a[href*=\"two-factor-skip\"]) {
 			margin-bottom: 20px;
+		}
+
+		/* 3.3.3 — Wordfence Login Security 2FA. Wordfence renders its 2FA
+		   prompt as #wfls-prompt-overlay: an OPAQUE box absolutely positioned
+		   inside #loginform that masks the login fields beneath it. Its default
+		   white background rendered a white card on the 2FA step. Repaint it as
+		   the dark card — kept opaque so it still masks the username/password
+		   fields underneath. */
+		body.login #login form #wfls-prompt-overlay {
+			background: rgb(28, 38, 42) !important;
+			border-radius: 22px !important;
+			-webkit-backdrop-filter: none !important;
+			backdrop-filter: none !important;
+			box-shadow: none !important;
+		}
+		/* The field icons and the show-password eye are position:absolute, so
+		   they escape the overlay mask and bleed onto the 2FA card. Hide them
+		   only while the 2FA overlay is present. */
+		body.login #login form:has(#wfls-prompt-overlay) .im-field-icon,
+		body.login #login form:has(#wfls-prompt-overlay) .wp-pwd .button.wp-hide-pw {
+			display: none !important;
+		}
+		/* Reveal the 2FA field label. The base rule visually hides every #login
+		   label, but here it is the only cue telling the user what to enter. */
+		body.login #login form #wfls-prompt-overlay label {
+			position: static !important;
+			width: auto !important;
+			height: auto !important;
+			overflow: visible !important;
+			clip: auto !important;
+			display: block !important;
+			margin: 0 0 8px !important;
+			color: var(--im-cream) !important;
+			font-size: 14px !important;
+			text-align: left !important;
 		}
 
 		@media (max-width: 520px) {
